@@ -1,7 +1,0 @@
-{
-  "name": "MyAllergens",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
