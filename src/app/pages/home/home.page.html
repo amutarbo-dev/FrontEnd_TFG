@@ -1,20 +1,112 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-menu contentId="main-content">
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title color="secondary">MyAllergens</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-content class="ion-padding">
+    <ion-list *ngFor="let item of paths">
+      <ion-item>
+        <ion-icon color="primary" name="{{item.icon}}"></ion-icon>
+        <ion-label>{{item.name}}</ion-label>
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button color="primary"></ion-menu-button>
+      </ion-buttons>
+      <ion-icon slot="end" name="scan" color="primary"></ion-icon>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-card mode="ios">
+      <ion-card-header>
+        <ion-card-title>Bienvenido a MyAllergens</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-input
+          mode="md"
+          label="Email"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Enter email"
+          class="custom-outline-input"
+        ></ion-input>
+
+        <ion-input
+          mode="md"
+          label="Contraseña"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Enter password"
+          class="custom-outline-input"
+        ></ion-input>
+
+        <ion-button routerLink="/home">Enter</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card mode="ios">
+      <ion-card-header>
+        <ion-card-title>Bienvenido a MyAllergens</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-input
+          mode="md"
+          label="Email"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Enter email"
+          class="custom-outline-input"
+        ></ion-input>
+
+        <ion-input
+          mode="md"
+          label="Contraseña"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Enter password"
+          class="custom-outline-input"
+        ></ion-input>
+
+        <ion-button routerLink="/home">Enter</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card mode="ios">
+      <ion-card-header>
+        <ion-card-title>Bienvenido a MyAllergens</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-input
+          mode="md"
+          label="Email"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Enter email"
+          class="custom-outline-input"
+        ></ion-input>
+
+        <ion-input
+          mode="md"
+          label="Contraseña"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Enter password"
+          class="custom-outline-input"
+        ></ion-input>
+
+        <ion-button routerLink="/home">Enter</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+</div>

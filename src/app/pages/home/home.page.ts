@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  paths = [
+    { name: 'Profile', path: '/profile', icon: 'person-outline' },
+    { name: 'Shop', path: '/shop', icon: 'basket-outline' },
+    { name: 'Items', path: '/items', icon: 'pricetag-outline' },
+    { name: 'Contact', path: '/contact', icon: 'chatbubble-outline' },
+    { name: 'About us', path: '/aboutus', icon: 'mail-outline' },
+
+  ];
+
   constructor() {}
 }

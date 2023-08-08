@@ -1,0 +1,42 @@
+:host {
+  .center-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    img {
+      max-width: 100%;
+      width: 30%;
+      background: white;
+      border-radius: 45%;
+    }
+  }
+
+  .login-container {
+    overflow-y: hidden;
+  }
+
+  ion-content {
+    --background: var(--ion-color-secondary);
+  }
+
+  ion-card {
+    height: 55%;
+    ion-card-header {
+      ion-card-title {
+        text-align: center;
+      }
+      margin-bottom: 2rem;
+    }
+
+    ion-card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      ion-button {
+        --color: white;
+      }
+    }
+  }
+}
