@@ -6,7 +6,7 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-list *ngFor="let item of paths">
-      <ion-item>
+      <ion-item routerLink="{{item.path}}">
         <ion-icon color="primary" name="{{item.icon}}"></ion-icon>
         <ion-label>{{item.name}}</ion-label>
         <ion-icon name="arrow-forward-outline"></ion-icon>
