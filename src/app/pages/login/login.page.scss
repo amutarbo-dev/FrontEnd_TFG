@@ -36,6 +36,9 @@
       gap: 1rem;
       ion-button {
         --color: white;
+        &:last-child {
+          --color: var(--ion-color-primary);
+        }
       }
     }
   }
