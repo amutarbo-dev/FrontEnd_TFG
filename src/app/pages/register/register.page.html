@@ -49,10 +49,13 @@
             formControlName="confirmPassword"
           ></ion-input>
 
-          <ion-button type="submit" [disabled]="userForm.invalid">
-            Register
-          </ion-button>
-          <ion-button fill="outline" routerLink="/login">Back</ion-button>
+          <div class="btn-container">
+            <ion-button type="submit" [disabled]="userForm.invalid">
+              Register
+            </ion-button>
+
+            <ion-button fill="outline" routerLink="/login">Back</ion-button>
+          </div>
         </form>
       </ion-card-content>
     </ion-card>
