@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <form [formGroup]="userForm" (ngSubmit)="saveChanges()">
+  <form [formGroup]="userForm" (ngSubmit)="saveChanges($event)">
     <div class="container-profile">
       <div class="user-info">
         <ion-icon color="primary" name="person-circle-outline"></ion-icon>
@@ -27,14 +27,6 @@
               labelPlacement="stacked"
               placeholder="Enter text"
               formControlName="email"
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input
-              label="Phone Number"
-              labelPlacement="stacked"
-              placeholder="Enter text"
-              formControlName="phoneNumber"
             ></ion-input>
           </ion-item>
         </ion-list>
@@ -62,7 +54,7 @@
         <ion-button
           type="submit"
           *ngIf="editMode"
-          (click)="editMode=false"
+          (click)="editMode=false;"
           class="outline-primary"
           fill="outline"
         >

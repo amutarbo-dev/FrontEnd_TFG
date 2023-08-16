@@ -17,7 +17,6 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./pages/register/register.module').then(
         (m) => m.RegisterPageModule
@@ -31,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
 ];

@@ -47,6 +47,14 @@ export class AuthService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
+  editProfile(body: any) {
+    return this.http
+      .patch(`${this.backUrl}/users/editProfile`, {
+        ...body,
+      })
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
   handleError(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

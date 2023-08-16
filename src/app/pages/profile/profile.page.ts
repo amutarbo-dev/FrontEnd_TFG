@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '@services/auth.service';
+import { LocalStorageService } from '@services/local-storage.service';
 
 @Component({
   selector: 'app-profile',
@@ -9,30 +11,47 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ProfilePage {
   path = '/assets/icon/allergens';
   allergens: any = [
-    { path: 'lacteos.png', disabled: false },
-    { path: 'gluten.png', disabled: false },
-    { path: 'soja.png', disabled: false },
-    { path: 'huevo.png', disabled: false },
-    { path: 'frutosdecascara.png', disabled: false },
-    { path: 'mostaza.png', disabled: false },
-    { path: 'fish.png', disabled: false },
-    { path: 'peanuts.png', disabled: false },
-    { path: 'sulfitos.png', disabled: false },
-    { path: 'sesamo.png', disabled: false },
-    { path: 'moluscos.png', disabled: false },
-    { path: 'lupins.png', disabled: false },
-    { path: 'apio.png', disabled: false },
+    { path: 'lacteos.png', type: 'en:milk', disabled: false },
+    { path: 'gluten.png', type: 'en:gluten', disabled: false },
+    { path: 'soja.png', type: 'en:soybeans', disabled: false },
+    { path: 'huevo.png', type: 'en:eggs', disabled: false },
+    { path: 'frutosdecascara.png', type: 'en:nuts', disabled: false },
+    { path: 'mostaza.png', type: 'en:mustard', disabled: false },
+    { path: 'fish.png', type: 'en:fish', disabled: false },
+    { path: 'peanuts.png', type: 'en:peanuts', disabled: false },
+    {
+      path: 'sulfitos.png',
+      type: 'en:sulphur-dioxide-and-sulphites',
+      disabled: false,
+    },
+    { path: 'sesamo.png', type: 'en:sesame-seeds', disabled: false },
+    { path: 'moluscos.png', type: 'en:molluscs', disabled: false },
+    { path: 'lupins.png', type: 'en:lupins', disabled: false },
+    { path: 'apio.png', type: 'en:celery', disabled: false },
   ];
 
   userForm: FormGroup;
 
   editMode = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private localStorage: LocalStorageService,
+    private authService: AuthService
+  ) {
+    const user = this.localStorage.getItem('user');
+
     this.userForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', Validators.required],
+      name: [user.displayName, Validators.required],
+      email: [user.email, [Validators.required, Validators.email]],
+    });
+
+    this.allergens = this.allergens.map((allergen: any) => {
+      const allergensUser = user.allergies;
+      return {
+        ...allergen,
+        disabled: !allergensUser.includes(allergen.type),
+      };
     });
   }
 
@@ -40,10 +59,26 @@ export class ProfilePage {
     // Recuperar datos usuarios
   }
 
-  saveChanges() {
+  saveChanges(e: Event) {
+    e.preventDefault();
     if (this.userForm.valid) {
-      console.log(this.userForm.value);
-      console.log(this.allergens);
+      const allergies = this.allergens
+        .map((al: any) => {
+          if (al.disabled) {
+            return;
+          }
+
+          return al.type;
+        })
+        .filter((type: any) => type !== undefined && type !== null);
+
+      debugger;
+
+      this.authService
+        .editProfile({ ...this.userForm.value, allergies })
+        .subscribe((res) => {
+          debugger;
+        });
     }
   }
 }
