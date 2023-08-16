@@ -21,18 +21,15 @@ export class HeaderInterceptor implements HttpInterceptor {
     if (token) {
       const clonedRequest = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}`,
+          Authorization: token,
         },
       });
 
       return next.handle(clonedRequest);
     }
 
-    debugger;
     const clonedRequest = request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
+      setHeaders: {},
     });
 
     return next.handle(clonedRequest);

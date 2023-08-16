@@ -21,7 +21,6 @@ export class AuthService {
 
   signIn(loginForm: any) {
     const { email, password } = loginForm;
-    debugger;
     return this.http
       .post(`${this.backUrl}/users/login`, {
         email,
@@ -39,6 +38,12 @@ export class AuthService {
         email,
         password,
       })
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  getInfo() {
+    return this.http
+      .get(`${this.backUrl}/users/getUser`)
       .pipe(retry(1), catchError(this.handleError));
   }
 
