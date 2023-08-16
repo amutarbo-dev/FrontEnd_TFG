@@ -6,7 +6,10 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-list *ngFor="let item of paths">
-      <ion-item routerLink="{{item.path}}">
+      <ion-item
+        routerLink="{{item.path}}"
+        (click)="item.action ? item.action() : null"
+      >
         <ion-icon color="primary" name="{{item.icon}}"></ion-icon>
         <ion-label>{{item.name}}</ion-label>
         <ion-icon name="arrow-forward-outline"></ion-icon>
@@ -17,7 +20,7 @@
 
 <div class="ion-page" id="main-content">
   <ion-header>
-    <ion-toolbar>
+    <ion-toolbar>   
       <ion-buttons slot="start">
         <ion-menu-button color="primary"></ion-menu-button>
       </ion-buttons>
