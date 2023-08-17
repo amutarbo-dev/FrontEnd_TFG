@@ -72,13 +72,9 @@ export class ProfilePage {
         })
         .filter((type: any) => type !== undefined && type !== null);
 
-      debugger;
-
       this.authService
         .editProfile({ ...this.userForm.value, allergies })
-        .subscribe((res) => {
-          debugger;
-        });
+        .subscribe((res) => {});
     }
   }
 }

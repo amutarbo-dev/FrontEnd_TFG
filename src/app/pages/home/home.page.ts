@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '@services/local-storage.service';
 import { ProductsService } from 'src/app/shared/services/products.service';
@@ -26,26 +27,89 @@ export class HomePage implements OnInit {
     },
   ];
 
-  listOfProducts: any;
+  allergens: any = [
+    { path: 'lacteos.png', type: 'en:milk', disabled: false },
+    { path: 'gluten.png', type: 'en:gluten', disabled: false },
+    { path: 'soja.png', type: 'en:soybeans', disabled: false },
+    { path: 'huevo.png', type: 'en:eggs', disabled: false },
+    { path: 'frutosdecascara.png', type: 'en:nuts', disabled: false },
+    { path: 'mostaza.png', type: 'en:mustard', disabled: false },
+    { path: 'fish.png', type: 'en:fish', disabled: false },
+    { path: 'peanuts.png', type: 'en:peanuts', disabled: false },
+    {
+      path: 'sulfitos.png',
+      type: 'en:sulphur-dioxide-and-sulphites',
+      disabled: false,
+    },
+    { path: 'sesamo.png', type: 'en:sesame-seeds', disabled: false },
+    { path: 'moluscos.png', type: 'en:molluscs', disabled: false },
+    { path: 'lupins.png', type: 'en:lupins', disabled: false },
+    { path: 'apio.png', type: 'en:celery', disabled: false },
+  ];
+
+  productName: any;
+
+  currentPage = 0;
+  pageSize = 20;
+  listOfProducts: any = [];
+
+  showSearchModal = false;
 
   constructor(
     private productService: ProductsService,
     private localStorage: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
-    this.productService.getProducts(20, 0).subscribe((res) => {
-      this.listOfProducts = res.map((item: any) => {
-        const idPhoto = item._id.replace(
-          /(\d{3})(\d{3})(\d{3})(\d{4})/,
-          '$1/$2/$3/$4'
-        );
-        return {
-          ...item,
-          idPhoto,
-        };
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.productService
+      .getProducts(this.pageSize, this.currentPage)
+      .subscribe((res) => {
+        const modifiedProducts = res.map((item: any) => {
+          const idPhoto = item._id.replace(
+            /(\d{3})(\d{3})(\d{3})(\d{4})/,
+            '$1/$2/$3/$4'
+          );
+          return {
+            ...item,
+            idPhoto,
+          };
+        });
+        this.listOfProducts = this.listOfProducts.concat(modifiedProducts);
       });
+  }
+
+  loadMore(event: any) {
+    this.currentPage++;
+    this.loadProducts();
+    event.target.complete();
+  }
+
+  openModal() {
+    this.showSearchModal = true;
+    this.productName = this.fb.group({
+      name: [''],
     });
+  }
+
+  cancel() {}
+
+  confirm() {
+
+    // Nombre:
+    // this.allergens listo
+    console.log(this.productName.value.name);
+    console.log(this.allergens);
+    debugger;
+    //LANZAR LLAMADA CON PARAMETROS FILTRADOS
+  }
+
+  onCloseModal(event: any) {
+    debugger;
   }
 }
