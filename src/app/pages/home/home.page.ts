@@ -27,25 +27,7 @@ export class HomePage implements OnInit {
     },
   ];
 
-  allergens: any = [
-    { path: 'lacteos.png', type: 'en:milk', disabled: false },
-    { path: 'gluten.png', type: 'en:gluten', disabled: false },
-    { path: 'soja.png', type: 'en:soybeans', disabled: false },
-    { path: 'huevo.png', type: 'en:eggs', disabled: false },
-    { path: 'frutosdecascara.png', type: 'en:nuts', disabled: false },
-    { path: 'mostaza.png', type: 'en:mustard', disabled: false },
-    { path: 'fish.png', type: 'en:fish', disabled: false },
-    { path: 'peanuts.png', type: 'en:peanuts', disabled: false },
-    {
-      path: 'sulfitos.png',
-      type: 'en:sulphur-dioxide-and-sulphites',
-      disabled: false,
-    },
-    { path: 'sesamo.png', type: 'en:sesame-seeds', disabled: false },
-    { path: 'moluscos.png', type: 'en:molluscs', disabled: false },
-    { path: 'lupins.png', type: 'en:lupins', disabled: false },
-    { path: 'apio.png', type: 'en:celery', disabled: false },
-  ];
+  allergens: any;
 
   productName: any;
 
@@ -100,16 +82,18 @@ export class HomePage implements OnInit {
   cancel() {}
 
   confirm() {
-
     // Nombre:
     // this.allergens listo
     console.log(this.productName.value.name);
-    console.log(this.allergens);
-    debugger;
+    // console.log(this.allergens);
     //LANZAR LLAMADA CON PARAMETROS FILTRADOS
   }
 
   onCloseModal(event: any) {
     debugger;
+  }
+
+  setNewAllergens(event: any) {
+    this.allergens = event;
   }
 }

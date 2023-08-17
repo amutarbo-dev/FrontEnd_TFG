@@ -32,20 +32,10 @@
         </ion-list>
       </div>
 
-      <div class="user-allergens">
-        <div
-          class="image-container"
-          *ngFor="let al of allergens"
-          [class.disabled]="!editMode || al.disabled"
-          (click)="!editMode || (al.disabled = !al.disabled)"
-        >
-          <img
-            [ngClass]="al.disabled ? 'filter-gray' : ''"
-            [src]="'../../../assets/icon/allergens/' + al.path"
-          />
-          <div class="overlay" *ngIf="!editMode"></div>
-        </div>
-      </div>
+      <app-list-allergens-icons
+        (changeAllergens)="setNewAllergens($event)"
+        [editMode]="editMode"
+      ></app-list-allergens-icons>
 
       <div class="btn-container">
         <ion-button *ngIf="!editMode" (click)="editMode=true"

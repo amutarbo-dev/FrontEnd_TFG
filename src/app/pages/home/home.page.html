@@ -86,19 +86,11 @@
           </form>
         </div>
 
-        <div class="user-allergens">
-          <h4>Seleccione que alergenos desea eliminar</h4>
-          <div
-            class="image-container"
-            *ngFor="let al of allergens"
-            (click)="al.disabled = !al.disabled"
-          >
-            <img
-              [ngClass]="al.disabled ? 'filter-gray' : ''"
-              [src]="'../../../assets/icon/allergens/' + al.path"
-            />
-          </div>
-        </div>
+        <h4>Seleccione que alergenos desea eliminar</h4>
+        <app-list-allergens-icons
+          (changeAllergens)="setNewAllergens($event)"
+          [editMode]="true"
+        ></app-list-allergens-icons>
       </div>
     </ion-content>
   </ng-template>
