@@ -15,48 +15,34 @@ export class ProfilePage {
   userForm: FormGroup;
 
   editMode = false;
+  user: any;
 
   constructor(
     private fb: FormBuilder,
     private localStorage: LocalStorageService,
     private authService: AuthService
   ) {
-    const user = this.localStorage.getItem('user');
+    this.user = this.localStorage.getItem('user');
 
     this.userForm = this.fb.group({
-      name: [user.displayName, Validators.required],
-      email: [user.email, [Validators.required, Validators.email]],
-    });
-
-    this.allergens = this.allergens.map((allergen: any) => {
-      const allergensUser = user.allergies;
-      return {
-        ...allergen,
-        disabled: !allergensUser.includes(allergen.type),
-      };
+      name: [this.user.displayName, Validators.required],
+      email: [this.user.email, [Validators.required, Validators.email]],
     });
   }
 
-  ngOnInit() {
-    // Recuperar datos usuarios
-  }
+  ngOnInit() {}
 
   saveChanges(e: Event) {
     e.preventDefault();
     if (this.userForm.valid) {
-      const allergies = this.allergens
-        .map((al: any) => {
-          if (al.disabled) {
-            return;
-          }
-
-          return al.type;
-        })
-        .filter((type: any) => type !== undefined && type !== null);
-
       this.authService
-        .editProfile({ ...this.userForm.value, allergies })
-        .subscribe((res) => {});
+        .editProfile({ ...this.userForm.value, allergies: this.allergens })
+        .subscribe((res: any) => {
+          this.localStorage.setItem('user', {
+            ...this.user,
+            allergies: res.user.allergies,
+          });
+        });
     }
   }
 

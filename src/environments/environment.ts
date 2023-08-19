@@ -2,7 +2,7 @@ export const environment = {
   production: false,
   backUrl: 'http://localhost:3001/api',
   firebaseConfig: {
-    apiKey: 'AIzaSyAngio8l4GfyZn-wfFHb6p-AAyHd7kFXiqDc',
+    apiKey: 'AIzaSyAio8l4GfyZn-wfFHb6p-AAyHd7kFXiqDc',
     authDomain: 'myallergens.firebaseapp.com',
     projectId: 'myallergens',
     storageBucket: 'myallergens.appspot.com',

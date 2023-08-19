@@ -16,35 +16,34 @@ export class AuthService {
   constructor(
     private router: Router,
     private localStorage: LocalStorageService,
-    private http: HttpClient
+    private http: HttpClient,
+    private firebase: AngularFireAuth
   ) {}
 
-  signIn(loginForm: any) {
+  async signIn(loginForm: any) {
     const { email, password } = loginForm;
-    return this.http
-      .post(`${this.backUrl}/users/login`, {
-        email,
-        password,
-      })
-      .pipe(retry(1), catchError(this.handleError));
+    return await this.firebase.signInWithEmailAndPassword(email, password);
   }
 
   registerUser(userForm: any) {
-    const { displayName, email, password } = userForm;
+    const { email, password } = userForm;
+    return this.firebase.createUserWithEmailAndPassword(email, password);
+  }
 
+  addInfoRegisteredUser(displayName: string) {
     return this.http
       .post(`${this.backUrl}/users/register`, {
         displayName,
-        email,
-        password,
       })
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(retry(1), catchError(this.handleError))
+      .toPromise();
   }
 
   getInfo() {
     return this.http
       .get(`${this.backUrl}/users/getUser`)
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(retry(1), catchError(this.handleError))
+      .toPromise();
   }
 
   editProfile(body: any) {

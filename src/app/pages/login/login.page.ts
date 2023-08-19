@@ -26,12 +26,15 @@ export class LoginPage implements OnInit {
     });
   }
 
-  login() {
+  async login() {
     try {
-      this.authService.signIn(this.loginForm.value).subscribe((res: any) => {
-        this.localStorageService.setItem('token', res.token);
+      const res: any = await this.authService.signIn(this.loginForm.value);
+      const token = await res.user.getIdToken();
+
+      if (token) {
+        this.localStorageService.setItem('token', token);
         this.router.navigate(['/home']);
-      });
+      }
     } catch (err: any) {
       // Modal Error Programar
     }

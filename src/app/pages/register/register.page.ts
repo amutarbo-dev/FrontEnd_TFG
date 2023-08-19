@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from '@services/auth.service';
+import { LocalStorageService } from '@services/local-storage.service';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,8 @@ export class RegisterPage {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private localStorage: LocalStorageService
   ) {
     this.userForm = this.fb.group(
       {
@@ -47,21 +49,27 @@ export class RegisterPage {
     };
   }
 
-  register() {
+  async register() {
     if (!this.userForm.valid) {
       return;
     }
 
     try {
-      this.authService
-        .registerUser(this.userForm.value)
-        .subscribe((res: any) => {
-          this.presentAlert({
-            header: 'Registro completado',
-            message: 'Inicie sesion para continuar',
-          });
-        });
+      const res: any = await this.authService.registerUser(this.userForm.value);
+      const token = await res.user.getIdToken();
+
+      if (token) {
+        this.localStorage.setItem('token', token);
+        const res: any = await this.authService.addInfoRegisteredUser(
+          this.userForm.value.displayName
+        );
+
+        if (res) {
+          this.router.navigate(['/login']);
+        }
+      }
     } catch (err: any) {
+      console.error(err);
       // Modal Error Programar
     }
   }

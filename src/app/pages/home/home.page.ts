@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '@services/local-storage.service';
 import { ProductsService } from 'src/app/shared/services/products.service';
@@ -13,9 +12,8 @@ export class HomePage implements OnInit {
   paths = [
     { name: 'Profile', path: '/profile', icon: 'person-outline' },
     { name: 'Shop', path: '/shop', icon: 'basket-outline' },
-    { name: 'Items', path: '/items', icon: 'pricetag-outline' },
+    { name: 'Search', path: '/search', icon: 'search-outline' },
     { name: 'Contact', path: '/contact', icon: 'chatbubble-outline' },
-    { name: 'About us', path: '/aboutus', icon: 'mail-outline' },
     {
       name: 'Log out',
       path: '/logout',
@@ -37,11 +35,11 @@ export class HomePage implements OnInit {
 
   showSearchModal = false;
 
+  query: any;
   constructor(
     private productService: ProductsService,
     private localStorage: LocalStorageService,
-    private router: Router,
-    private fb: FormBuilder
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -50,7 +48,7 @@ export class HomePage implements OnInit {
 
   loadProducts() {
     this.productService
-      .getProducts(this.pageSize, this.currentPage)
+      .getProducts(this.pageSize, this.currentPage, this.query)
       .subscribe((res) => {
         const modifiedProducts = res.map((item: any) => {
           const idPhoto = item._id.replace(
@@ -72,28 +70,12 @@ export class HomePage implements OnInit {
     event.target.complete();
   }
 
-  openModal() {
-    this.showSearchModal = true;
-    this.productName = this.fb.group({
-      name: [''],
-    });
-  }
+  openModal() {}
 
-  cancel() {}
-
-  confirm() {
-    // Nombre:
-    // this.allergens listo
-    console.log(this.productName.value.name);
-    // console.log(this.allergens);
-    //LANZAR LLAMADA CON PARAMETROS FILTRADOS
-  }
-
-  onCloseModal(event: any) {
-    debugger;
-  }
-
-  setNewAllergens(event: any) {
-    this.allergens = event;
+  onModalClose(event: any) {
+    this.query = { name: event.name, allergens_tags: event.allergens };
+    this.showSearchModal = false;
+    this.listOfProducts = [];
+    this.loadProducts();
   }
 }

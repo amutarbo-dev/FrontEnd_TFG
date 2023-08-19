@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { LocalStorageService } from '@services/local-storage.service';
 
 @Component({
   selector: 'app-list-allergens-icons',
@@ -29,7 +30,15 @@ export class ListAllergensIconsComponent {
     { path: 'apio.png', type: 'en:celery', disabled: false },
   ];
 
-  constructor() {}
+  constructor(private localStorage: LocalStorageService) {
+    const user = this.localStorage.getItem('user');
+    this.allergens = this.allergens.map((al: any) => {
+      if (user.allergies.includes(al.type)) {
+        return { ...al, disabled: false };
+      }
+      return { ...al, disabled: true };
+    });
+  }
 
   selectAllergen(al: any) {
     this.allergens = this.allergens.map((el: any) => {
@@ -43,6 +52,16 @@ export class ListAllergensIconsComponent {
       return el;
     });
 
-    this.changeAllergens.emit(this.allergens);
+    const allergens_tags = this.allergens
+      .map((al: any) => {
+        if (al.disabled) {
+          return;
+        }
+
+        return al.type;
+      })
+      .filter((type: any) => type !== undefined && type !== null);
+
+    this.changeAllergens.emit(allergens_tags);
   }
 }
