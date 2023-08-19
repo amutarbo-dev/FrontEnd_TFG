@@ -11,8 +11,8 @@ import { ProductsService } from 'src/app/shared/services/products.service';
 export class HomePage implements OnInit {
   paths = [
     { name: 'Profile', path: '/profile', icon: 'person-outline' },
-    { name: 'Shop', path: '/shop', icon: 'basket-outline' },
-    { name: 'Search', path: '/search', icon: 'search-outline' },
+    { name: 'Favorites', path: '/favorites', icon: 'star-outline' },
+    { name: 'Scan', path: '/scan', icon: 'scan-outline' },
     { name: 'Contact', path: '/contact', icon: 'chatbubble-outline' },
     {
       name: 'Log out',

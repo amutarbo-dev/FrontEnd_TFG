@@ -1,0 +1,46 @@
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title color="secondary">MyAllergens</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-list *ngFor="let item of paths">
+      <ion-item
+        routerLink="{{item.path}}"
+        (click)="item.action ? item.action() : null"
+      >
+        <ion-icon color="primary" name="{{item.icon}}"></ion-icon>
+        <ion-label>{{item.name}}</ion-label>
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button color="primary"></ion-menu-button>
+      </ion-buttons>
+      <!-- <ion-icon
+        slot="end"
+        name="search"
+        color="primary"
+        (click)="showSearchModal = true"
+      ></ion-icon> -->
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <h2>
+      {{favoriteProducts.length === 0 ? "No tiene productos aqui": "Productos favoritos"}}
+    </h2>
+
+    <app-product-card
+      *ngFor="let product of favoriteProducts"
+      [product]="product"
+    ></app-product-card>
+  </ion-content>
+</div>

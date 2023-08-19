@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from '@services/auth.service';
+import { LocalStorageService } from '@services/local-storage.service';
 
 @Component({
   selector: 'app-product-card',
@@ -10,11 +12,20 @@ export class ProductCardComponent implements OnInit {
 
   isNotCompleted: boolean = false;
   noAllergens: boolean = false;
+  userFavorite: boolean = false;
 
-  constructor() {}
+  user: any;
+
+  constructor(
+    private localStorage: LocalStorageService,
+    private userService: AuthService
+  ) {
+    this.user = this.localStorage.getItem('user');
+  }
 
   ngOnInit() {
     this.getDangerIcon();
+    this.userFavorite = this.user.favorites.includes(this.product.id);
   }
 
   getDangerIcon() {
@@ -22,7 +33,6 @@ export class ProductCardComponent implements OnInit {
     if (this.noAllergens) {
       return;
     }
-
     this.isNotCompleted = this.product.completeness < 0.5 ? true : false;
   }
 
@@ -45,5 +55,30 @@ export class ProductCardComponent implements OnInit {
     };
 
     return allergens[typeOfAllergen];
+  }
+
+  setFavorite() {
+    const { favorites } = this.user;
+    const added = favorites.concat(this.product.id);
+    this.editFavorite(added);
+    this.userFavorite = true;
+  }
+
+  deleteFavorite() {
+    const { favorites } = this.user;
+    const removed = favorites.filter((id: string) => id !== this.product.id);
+    this.editFavorite(removed);
+    this.userFavorite = false;
+  }
+
+  private editFavorite(body: any) {
+    this.userService.editProfile({ favorites: body }).subscribe((res: any) => {
+      this.user = {
+        ...this.user,
+        favorites: body,
+      };
+
+      this.localStorage.setItem('user', this.user);
+    });
   }
 }
