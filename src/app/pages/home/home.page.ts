@@ -9,24 +9,7 @@ import { ProductsService } from 'src/app/shared/services/products.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  paths = [
-    { name: 'Profile', path: '/profile', icon: 'person-outline' },
-    { name: 'Favorites', path: '/favorites', icon: 'star-outline' },
-    { name: 'Scan', path: '/scan', icon: 'scan-outline' },
-    { name: 'Contact', path: '/contact', icon: 'chatbubble-outline' },
-    {
-      name: 'Log out',
-      path: '/logout',
-      icon: 'exit-outline',
-      action: () => {
-        this.localStorage.removeAll();
-        this.router.navigate(['/login']);
-      },
-    },
-  ];
-
   allergens: any;
-
   productName: any;
 
   currentPage = 0;
@@ -36,11 +19,7 @@ export class HomePage implements OnInit {
   showSearchModal = false;
 
   query: any;
-  constructor(
-    private productService: ProductsService,
-    private localStorage: LocalStorageService,
-    private router: Router
-  ) {}
+  constructor(private productService: ProductsService) {}
 
   ngOnInit() {
     this.loadProducts();
