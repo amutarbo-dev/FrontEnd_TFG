@@ -44,8 +44,6 @@ export class ProductCardComponent implements OnInit {
       'en:celery': `${path}/apio.png`,
     };
 
-    debugger;
-
     return allergens[typeOfAllergen];
   }
 }

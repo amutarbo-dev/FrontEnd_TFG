@@ -1,0 +1,30 @@
+.container-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+  gap: 2rem;
+}
+
+ion-button {
+  --color: var(--ion-color-light);
+}
+
+.outline-primary {
+  --color: var(--ion-color-primary);
+}
+
+.image-container {
+  position: relative;
+}
+
+.user-info {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  ion-icon {
+    font-size: 10rem;
+    align-self: center;
+  }
+}

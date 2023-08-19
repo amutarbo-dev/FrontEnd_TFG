@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,10 +10,19 @@ export class ProductsService {
   urlProducts = `${environment.backUrl}/product`;
   constructor(private http: HttpClient) {}
 
-  getProducts(limit: number, skip: number) {
-    const urlProducts = `${this.urlProducts}?limit=${limit}&skip=${skip}`;
+  getProducts(limit: number, skip: number, query?: any) {
+    let params = new HttpParams().set('limit', limit).set('skip', skip);
+
+    if (query && query?.name !== '') {
+      params = params.set('name', query.name);
+    }
+
+    if (query && query?.allergens_tags.length > 0) {
+      params = params.set('allergens_tags', query.allergens_tags.join());
+    }
+
     return this.http
-      .get<any>(urlProducts)
+      .get<any>(this.urlProducts, { params })
       .pipe(retry(1), catchError(this.handleError));
   }
 

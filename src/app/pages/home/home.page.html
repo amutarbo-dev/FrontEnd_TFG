@@ -6,7 +6,10 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-list *ngFor="let item of paths">
-      <ion-item>
+      <ion-item
+        routerLink="{{item.path}}"
+        (click)="item.action ? item.action() : null"
+      >
         <ion-icon color="primary" name="{{item.icon}}"></ion-icon>
         <ion-label>{{item.name}}</ion-label>
         <ion-icon name="arrow-forward-outline"></ion-icon>
@@ -21,14 +24,33 @@
       <ion-buttons slot="start">
         <ion-menu-button color="primary"></ion-menu-button>
       </ion-buttons>
-      <ion-icon slot="end" name="scan" color="primary"></ion-icon>
+      <ion-icon
+        slot="end"
+        name="search"
+        color="primary"
+        (click)="showSearchModal = true"
+      ></ion-icon>
     </ion-toolbar>
   </ion-header>
 
   <ion-content class="ion-padding">
+    <h2>{{query ? "Productos filtrados": "Últimos productos"}}</h2>
+
     <app-product-card
       *ngFor="let product of listOfProducts"
       [product]="product"
     ></app-product-card>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Cargando más..."
+      ></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </ion-content>
 </div>
+
+<app-search-modal
+  [isOpen]="showSearchModal"
+  (onModalClose)="onModalClose($event)"
+></app-search-modal>

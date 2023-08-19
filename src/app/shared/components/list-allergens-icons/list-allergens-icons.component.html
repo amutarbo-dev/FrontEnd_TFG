@@ -1,0 +1,14 @@
+<div class="user-allergens">
+  <div
+    class="image-container"
+    *ngFor="let al of allergens"
+    [class.disabled]="!editMode || al.disabled"
+    (click)="!editMode || selectAllergen(al)"
+  >
+    <img
+      [ngClass]="al.disabled ? 'filter-gray' : ''"
+      [src]="'../../../assets/icon/allergens/' + al.path"
+    />
+    <div class="overlay" *ngIf="!editMode"></div>
+  </div>
+</div>
