@@ -54,6 +54,13 @@ export class AuthService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
+  getFavorites() {
+    const urlProducts = `${this.backUrl}/users/favorites`;
+    return this.http
+      .get<any>(urlProducts)
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
   handleError(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

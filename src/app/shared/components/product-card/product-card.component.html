@@ -2,12 +2,21 @@
   <ion-card-header>
     <div class="header-info">
       <ion-card-title>{{ product.product_name }}</ion-card-title>
+
       <ion-icon
-        *ngIf="noAllergens || isNotCompleted"
-        [color]="noAllergens ? 'danger' : isNotCompleted ? 'warning' : null"
+        *ngIf="!userFavorite"
+        color="primary"
         size="large"
-        name="alert-circle-outline"
-        tooltip="por completar"
+        name="star-outline"
+        (click)="setFavorite()"
+      ></ion-icon>
+
+      <ion-icon
+        *ngIf="userFavorite"
+        color="primary"
+        size="large"
+        name="star"
+        (click)="deleteFavorite()"
       ></ion-icon>
     </div>
     <hr />
@@ -27,7 +36,7 @@
 
       <div class="allergens">
         <img
-        class="allergens-img"
+          class="allergens-img"
           *ngFor="let allergen of product.allergens_tags"
           [src]="getAllergens(allergen)"
         />

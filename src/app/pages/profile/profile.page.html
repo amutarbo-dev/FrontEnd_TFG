@@ -1,56 +1,60 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      <app-back-button></app-back-button>
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-menu idmenu="profile"></app-menu>
 
-<ion-content [fullscreen]="true">
-  <form [formGroup]="userForm" (ngSubmit)="saveChanges($event)">
-    <div class="container-profile">
-      <div class="user-info">
-        <ion-icon color="primary" name="person-circle-outline"></ion-icon>
+<div class="ion-page" id="profile">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button color="primary"></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
-        <ion-list>
-          <ion-item>
-            <ion-input
-              label="Name"
-              labelPlacement="stacked"
-              placeholder="Enter text"
-              formControlName="name"
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input
-              label="Email"
-              labelPlacement="stacked"
-              placeholder="Enter text"
-              formControlName="email"
-            ></ion-input>
-          </ion-item>
-        </ion-list>
+  <ion-content [fullscreen]="true">
+    <form [formGroup]="userForm" (ngSubmit)="saveChanges($event)">
+      <div class="container-profile">
+        <div class="user-info">
+          <ion-icon color="primary" name="person-circle-outline"></ion-icon>
+
+          <ion-list>
+            <ion-item>
+              <ion-input
+                label="Name"
+                labelPlacement="stacked"
+                placeholder="Enter text"
+                formControlName="name"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input
+                label="Email"
+                labelPlacement="stacked"
+                placeholder="Enter text"
+                formControlName="email"
+              ></ion-input>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <app-list-allergens-icons
+          (changeAllergens)="setNewAllergens($event)"
+          [editMode]="editMode"
+        ></app-list-allergens-icons>
+
+        <div class="btn-container">
+          <ion-button *ngIf="!editMode" (click)="editMode=true"
+            >Editar
+          </ion-button>
+          <ion-button
+            type="submit"
+            *ngIf="editMode"
+            (click)="editMode=false;"
+            class="outline-primary"
+            fill="outline"
+          >
+            Guardar
+          </ion-button>
+        </div>
       </div>
-
-      <app-list-allergens-icons
-        (changeAllergens)="setNewAllergens($event)"
-        [editMode]="editMode"
-      ></app-list-allergens-icons>
-
-      <div class="btn-container">
-        <ion-button *ngIf="!editMode" (click)="editMode=true"
-          >Editar
-        </ion-button>
-        <ion-button
-          type="submit"
-          *ngIf="editMode"
-          (click)="editMode=false;"
-          class="outline-primary"
-          fill="outline"
-        >
-          Guardar
-        </ion-button>
-      </div>
-    </div>
-  </form>
-</ion-content>
+    </form>
+  </ion-content>
+</div>

@@ -1,0 +1,22 @@
+<app-menu idmenu="favorite"></app-menu>
+
+<div class="ion-page" id="favorite">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button color="primary"></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <h2>
+      {{favoriteProducts.length === 0 ? "No tiene productos aqui": "Productos favoritos"}}
+    </h2>
+
+    <app-product-card
+      *ngFor="let product of favoriteProducts"
+      [product]="product"
+    ></app-product-card>
+  </ion-content>
+</div>

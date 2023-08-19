@@ -7,12 +7,14 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListAllergensIconsComponent } from './list-allergens-icons/list-allergens-icons.component';
 import { SearchModalComponent } from './search-modal/search-modal.component';
+import { MenuComponent } from './menu/menu.component';
 
 const components = [
   ProductCardComponent,
   BackButtonComponent,
   ListAllergensIconsComponent,
   SearchModalComponent,
+  MenuComponent,
 ];
 
 @NgModule({
