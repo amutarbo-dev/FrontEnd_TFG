@@ -8,23 +8,6 @@ import { ProductsService } from '@services/products.service';
   styleUrls: ['./favorites.page.scss'],
 })
 export class FavoritesPage implements OnInit {
-  paths = [
-    { name: 'Home', path: '/home', icon: 'home-outline' },
-    { name: 'Profile', path: '/profile', icon: 'person-outline' },
-    { name: 'Favorites', path: '/favorites', icon: 'star-outline' },
-    { name: 'Scan', path: '/scan', icon: 'scan-outline' },
-    { name: 'Contact', path: '/contact', icon: 'chatbubble-outline' },
-    {
-      name: 'Log out',
-      path: '/logout',
-      icon: 'exit-outline',
-      action: () => {
-        // this.localStorage.removeAll();
-        // this.router.navigate(['/login']);
-      },
-    },
-  ];
-
   constructor(private auth: AuthService) {}
   favoriteProducts = [];
 

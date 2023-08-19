@@ -22,19 +22,20 @@ export class AuthGuard implements CanActivate {
 
   async getToken() {
     const token = this.localStorage.getItem('token');
+    debugger;
     if (!token) {
       this.router.navigate(['/login']);
       return false;
     }
 
-    const res: any = await this.authService.getInfo();
-    if (res) {
+    try {
+      const res: any = await this.authService.getInfo();
       this.localStorage.setItem('user', { ...res });
       return true;
+    } catch (error) {
+      this.router.navigate(['/login']);
+      return false;
     }
-
-    this.router.navigate(['/login']);
-    return false;
   }
 
   canActivate(
